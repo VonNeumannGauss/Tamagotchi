@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Tamagotchi {
+class Tamagotchi: ObservableObject {
     
     var age: Int = 0
     var weight: Int = 5 {
@@ -19,8 +19,8 @@ class Tamagotchi {
             }
         }
     }
-    var discipline: Int
-    var hunger: Int {
+    @Published var discipline: Int
+    @Published var hunger: Int {
         didSet {
             if hunger > 5 {
                 hunger = 5
@@ -29,7 +29,7 @@ class Tamagotchi {
             }
         }
     }
-    var happiness: Int {
+    @Published var happiness: Int {
         didSet {
             if happiness > 5 {
                 happiness = 5
