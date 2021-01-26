@@ -59,18 +59,18 @@ class Tamagotchi: ObservableObject {
         return "Happiness: \(String(repeating: "\u{2665}", count:happiness)) \nHunger: \(String(repeating: "\u{1F374}", count:hunger)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:discipline))"
     }
     
-    func eatSnack() {
+    func eatSnack() -> String {
         hunger -= 1
         happiness += 1
         weight += 2
-        print("Yummy!")
+        return "Yummy!"
     }
     
-    func eatMeal() {
+    func eatMeal() -> String {
         hunger -= 2
         happiness += 2
         weight += 4
-        print("Hmmmmmmmmmmm")
+        return "Hmmmmmmmmmmm"
     }
     
     func wakeUp() {

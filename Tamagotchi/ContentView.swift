@@ -22,7 +22,7 @@ import SwiftUI
 struct ContentView: View {
     //as I'll be changing properties of this e.g. happiness throughout
     @StateObject var tamagotchi = Tamagotchi()
-    
+    @State var dialogue: String = "This is where Tamagotchi will speak to you"
     
     
     @State private var isFedMeal = false
@@ -36,10 +36,15 @@ struct ContentView: View {
             Form {
                 //Button for feed meal
                 Button("Feed meal", action: {
-                    tamagotchi.eatMeal()
+                    dialogue = tamagotchi.eatMeal()
+                })
+                Button("Feed snack", action: {
+                    dialogue = tamagotchi.eatSnack()
                 })
                 
             }
+            Text("\(dialogue)")
+                .baselineOffset(20.0)
             
         }
         
