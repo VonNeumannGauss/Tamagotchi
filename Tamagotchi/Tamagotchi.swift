@@ -83,6 +83,7 @@ class Tamagotchi: ObservableObject {
         print("I'm sleeping now")
     }
     
+    //normal playgame - modified for app display so don't use 
     func playGame() {
         let game = Game()
         var numberOfCorrectGuesses = Int()
@@ -101,6 +102,11 @@ class Tamagotchi: ObservableObject {
         
          happiness += numberOfCorrectGuesses / 2
         
+    }
+    
+    //for swiftUI
+    func playGameSwiftUI(numberOfCorrectGuesses: Int) {
+        happiness += numberOfCorrectGuesses / 2
     }
     
     func takeMedicine() {

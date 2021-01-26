@@ -24,6 +24,7 @@ struct ContentView: View {
     @StateObject var tamagotchi = Tamagotchi()
     @State var dialogue: String = "This is where Tamagotchi will speak to you"
     
+    @State private var gameResponse: String = ""
     
     @State private var isFedMeal = false
     
@@ -41,6 +42,30 @@ struct ContentView: View {
                 Button("Feed snack", action: {
                     dialogue = tamagotchi.eatSnack()
                 })
+                
+                
+                //need to make the game work
+                
+                Button("Play game", action: {
+                    let game = Game()
+                    var numberOfCorrectGuesses = Int()
+                    for _ in 1...5 {
+                        var personDirection = Bool()
+                        //TextField("Will Tamagotchi go left or right? Input 'L' or 'R'", text: $gameResponse)
+                            //.disableAutocorrection(true)
+                        if gameResponse == "L" {
+                            personDirection = false
+                        } else {
+                            personDirection = true
+                        }
+                        numberOfCorrectGuesses += game.playGame(personDirection: personDirection)
+                    }
+                       
+                    tamagotchi.playGameSwiftUI(numberOfCorrectGuesses: numberOfCorrectGuesses)
+                    
+                })
+                TextField("Will Tamagotchi go left or right? Input 'L' or 'R'", text: $gameResponse)
+                //need an dynamic output field + an input field
                 
             }
             Text("\(dialogue)")
