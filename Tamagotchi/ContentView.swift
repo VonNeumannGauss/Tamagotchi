@@ -28,12 +28,24 @@ struct ContentView: View {
     
     @State private var isFedMeal = false
     
+    let timer = Timer.publish(every: 10, on: .main, in: .common)
+        .autoconnect()
+    
     var body: some View {
         
         
         VStack {
-            Text(tamagotchi.displayHealthMeter())
-                .padding()
+            VStack {
+                Text(tamagotchi.displayHealthMeter())
+                    .padding()
+                //add the age here - this is also where the timer for random events will be linked in
+                Text("Tamagotchi's age")
+                    .onReceive(timer) { _ in
+                        self.tamagotchi.randomEvent()
+                    }
+                
+            }
+            
             Form {
                 //Button for feed meal
                 Button("Feed meal", action: {
@@ -47,25 +59,24 @@ struct ContentView: View {
                 //need to make the game work
                 
                 Button("Play game", action: {
-                    let game = Game()
                     var numberOfCorrectGuesses = Int()
                     for _ in 1...5 {
-                        var personDirection = Bool()
-                        //TextField("Will Tamagotchi go left or right? Input 'L' or 'R'", text: $gameResponse)
-                            //.disableAutocorrection(true)
-                        if gameResponse == "L" {
-                            personDirection = false
-                        } else {
-                            personDirection = true
-                        }
-                        numberOfCorrectGuesses += game.playGame(personDirection: personDirection)
-                    }
                        
-                    tamagotchi.playGameSwiftUI(numberOfCorrectGuesses: numberOfCorrectGuesses)
+                        var results = tamagotchi.playGameSwiftUI(numberOfCorrectGuesses: numberOfCorrectGuesses, gameResponse: gameResponse)
+                        
+                        dialogue = results.0
+                        numberOfCorrectGuesses = results.1
+                        
+                        
+                        //separate game dialogue + toggle button to turn on game mode or sthg like that
+                    }
+                    tamagotchi.incrementHappinessWhenPlayingGame(numberOfCorrectGuesses: numberOfCorrectGuesses)
+                       
                     
                 })
                 TextField("Will Tamagotchi go left or right? Input 'L' or 'R'", text: $gameResponse)
                 //need an dynamic output field + an input field
+                Text("Your response: \(gameResponse)")
                 
             }
             Text("\(dialogue)")

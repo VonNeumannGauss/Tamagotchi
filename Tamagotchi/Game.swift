@@ -26,13 +26,9 @@ class Game {
         }
         return numberOfCorrectGuesses
     }
-    /*
-    func randomEvent() {
-        let whatHappens = Int.random(in: 1...5)
-        switch whatHappens {
-        case 1:
-            //isSick = true
-        }
-    }
- */
+    //use a timer for randomEvent - i.e. every 10 seconds for example, something happens!
+    
+    
+ 
+ 
 }

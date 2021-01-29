@@ -105,7 +105,32 @@ class Tamagotchi: ObservableObject {
     }
     
     //for swiftUI
-    func playGameSwiftUI(numberOfCorrectGuesses: Int) {
+    func playGameSwiftUI(numberOfCorrectGuesses: Int, gameResponse: String) -> (String, Int) {
+        var guesses = numberOfCorrectGuesses 
+        var dialogue: String
+        var personDirection = Bool()
+        //TextField("Will Tamagotchi go left or right? Input 'L' or 'R'", text: $gameResponse)
+            //.disableAutocorrection(true)
+        if gameResponse == "L" {
+            personDirection = false
+            dialogue = "YOu chose left!"
+        } else {
+            personDirection = true
+            dialogue = "YOu chose right!"
+        }
+        
+        let tamagotchiDirection = Bool.random()
+        if personDirection == tamagotchiDirection {
+            dialogue = "Good job! You guessed the right direction!"
+            guesses += 1
+        } else {
+            dialogue = "You guessed wrong"
+        }
+        
+        return (dialogue, guesses)
+    }
+    
+    func incrementHappinessWhenPlayingGame(numberOfCorrectGuesses: Int) {
         happiness += numberOfCorrectGuesses / 2
     }
     
@@ -131,6 +156,16 @@ class Tamagotchi: ObservableObject {
     func beCleanedUpAfter() {
         areThereDroppings = false
         print("Thanks for cleaning! I feel much better now.")
+    }
+    
+    func randomEvent() {
+        let whatHappens = Int.random(in: 1...5)
+        /*
+        switch whatHappens {
+        case 1:
+            //isSick = true
+        }
+         */
     }
     
 }
