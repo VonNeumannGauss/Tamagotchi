@@ -16,7 +16,7 @@ import SwiftUI
 
 
 //THings to do:
-//include an area for Tamagotchi to return dialogue
+//take all of the state modifying stuff out of the body and into functions beneath
 
 
 struct ContentView: View {
@@ -27,6 +27,10 @@ struct ContentView: View {
     @State private var gameResponse: String = ""
     
     @State private var isFedMeal = false
+    
+    //alert for playing game
+    @State private var showingAlert = false
+
     
     let timer = Timer.publish(every: 10, on: .main, in: .common)
         .autoconnect()
@@ -56,27 +60,21 @@ struct ContentView: View {
                 })
                 
                 
-                //need to make the game work
+                //makes the game work. Action Sheets are brilliant!
                 
-                Button("Play game", action: {
-                    var numberOfCorrectGuesses = Int()
-                    for _ in 1...5 {
-                       
-                        var results = tamagotchi.playGameSwiftUI(numberOfCorrectGuesses: numberOfCorrectGuesses, gameResponse: gameResponse)
-                        
-                        dialogue = results.0
-                        numberOfCorrectGuesses = results.1
-                        
-                        
-                        //separate game dialogue + toggle button to turn on game mode or sthg like that
-                    }
-                    tamagotchi.incrementHappinessWhenPlayingGame(numberOfCorrectGuesses: numberOfCorrectGuesses)
-                       
-                    
-                })
-                TextField("Will Tamagotchi go left or right? Input 'L' or 'R'", text: $gameResponse)
-                //need an dynamic output field + an input field
-                Text("Your response: \(gameResponse)")
+                Button("Play game", action: { showingAlert = true })
+                    .actionSheet(isPresented: $showingAlert, content: {
+                        ActionSheet(title: Text("Do you think Tamagotchi will go left or right?"), message: Text("Choose wisely..."), buttons: [.default(Text("Left"), action: {
+                            gameResponse = "L"
+                            playGame()
+                            //need to turn this off, otherwise it won't let you re-open the action sheet
+                        }),
+                            .default(Text("Right"), action: {
+                                gameResponse = "R"
+                                playGame()
+                                //need to turn this off, otherwise it won't let you re-open the action sheet
+                        })])
+                    })
                 
             }
             Text("\(dialogue)")
@@ -84,7 +82,14 @@ struct ContentView: View {
             
         }
         
+    }
+    
+    func playGame() {
 
+        let results = tamagotchi.playGameSwiftUI(gameResponse: gameResponse)
+            
+        dialogue = results
+            
     }
 }
 
