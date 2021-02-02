@@ -42,6 +42,8 @@ class Tamagotchi: ObservableObject {
     var isSleeping: Bool
     var needsAttention: Bool
     var areThereDroppings: Bool
+    //death = 1 means it's dead, otherwise it's alive. I know it's not ideal, but I wanted to make it a less than 50% chance that it would be dead
+    var death: Int
     
     init() {
         age = 0
@@ -53,14 +55,17 @@ class Tamagotchi: ObservableObject {
         isSleeping = false
         needsAttention = true
         areThereDroppings = false
+        death = 0
     }
     
     func displayHealthMeter() -> String {
         return "Happiness: \(String(repeating: "\u{2665}", count:happiness)) \nHunger: \(String(repeating: "\u{1F374}", count:hunger)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:discipline)) \nAge: \(age)"
     }
-    
+    //tamagotchis live to around 23 years at best = 230 seconds
+    //make it so that it ages more if things aren't being done i.e. ages faster or more likely to die of health stats are low
+    //display warning messages?
     func increaseAge() {
-        age += 5
+        age += 1
     }
     
     func eatSnack() -> String {
@@ -159,13 +164,35 @@ class Tamagotchi: ObservableObject {
     }
     
     func randomEvent() {
-        let whatHappens = Int.random(in: 1...5)
-        /*
+        let whatHappens = Int.random(in: 1...6)
+        
         switch whatHappens {
         case 1:
-            //isSick = true
+            //gets sick
+            isSick = true
+        case 2:
+            //needs bathroom
+            areThereDroppings = true
+        case 3:
+            discipline -= 1
+        case 4:
+            hunger += 1
+        default:
+            happiness -= 1
+            
         }
-         */
+        
+        if (age >= 10) || (hunger >= 2) || (happiness <= 2) || (areThereDroppings) || (isSick) {
+            death = Int.random(in: 1...3)
+            //what happens will be delegated to contentView
+        }
+        
+    }
+    
+    func isDead() -> Bool {
+        
+        return (death == 1)
+        
     }
     
 }

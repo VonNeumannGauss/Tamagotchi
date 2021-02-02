@@ -30,6 +30,9 @@ struct ContentView: View {
     
     //alert for playing game
     @State private var showingAlert = false
+    
+    //isDead
+    @State private var isDead = false
 
     
     let timer = Timer.publish(every: 5, on: .main, in: .common)
@@ -46,6 +49,15 @@ struct ContentView: View {
                         .onReceive(timer) { _ in
                             self.tamagotchi.randomEvent()
                             tamagotchi.increaseAge()
+                            
+                            if tamagotchi.isDead() {
+                                isDead = true
+                                Text("")
+                                    .alert(isPresented: $isDead) {
+                                        Alert(title: Text("Game over"), message: Text("Tamagotchi died"), dismissButton: .default(Text("Ok")))
+                                    }
+                                }
+                            
                         }
 
                     
