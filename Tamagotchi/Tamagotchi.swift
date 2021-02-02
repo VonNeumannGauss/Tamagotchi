@@ -9,7 +9,7 @@ import Foundation
 
 class Tamagotchi: ObservableObject {
     
-    var age: Int = 0
+    @Published var age: Int = 0
     var weight: Int = 5 {
         didSet {
             if weight > 99 {
@@ -56,7 +56,11 @@ class Tamagotchi: ObservableObject {
     }
     
     func displayHealthMeter() -> String {
-        return "Happiness: \(String(repeating: "\u{2665}", count:happiness)) \nHunger: \(String(repeating: "\u{1F374}", count:hunger)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:discipline))"
+        return "Happiness: \(String(repeating: "\u{2665}", count:happiness)) \nHunger: \(String(repeating: "\u{1F374}", count:hunger)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:discipline)) \nAge: \(age)"
+    }
+    
+    func increaseAge() {
+        age += 5
     }
     
     func eatSnack() -> String {

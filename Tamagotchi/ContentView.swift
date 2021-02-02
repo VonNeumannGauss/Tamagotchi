@@ -32,57 +32,61 @@ struct ContentView: View {
     @State private var showingAlert = false
 
     
-    let timer = Timer.publish(every: 10, on: .main, in: .common)
+    let timer = Timer.publish(every: 5, on: .main, in: .common)
         .autoconnect()
     
     var body: some View {
         
-        
-        VStack {
+        NavigationView {
             VStack {
-                Text(tamagotchi.displayHealthMeter())
-                    .padding()
-                //add the age here - this is also where the timer for random events will be linked in
-                Text("Tamagotchi's age")
-                    .onReceive(timer) { _ in
-                        self.tamagotchi.randomEvent()
-                    }
+                VStack {
+                    //add the age here - this is also where the timer for random events will be linked in
+                    Text(tamagotchi.displayHealthMeter())
+                        .padding()
+                        .onReceive(timer) { _ in
+                            self.tamagotchi.randomEvent()
+                            tamagotchi.increaseAge()
+                        }
+
+                    
+                }
                 
-            }
-            
-            Form {
-                //Button for feed meal
-                Button("Feed meal", action: {
-                    dialogue = tamagotchi.eatMeal()
-                })
-                Button("Feed snack", action: {
-                    dialogue = tamagotchi.eatSnack()
-                })
-                
-                
-                //makes the game work. Action Sheets are brilliant!
-                
-                Button("Play game", action: { showingAlert = true })
-                    .actionSheet(isPresented: $showingAlert, content: {
-                        ActionSheet(title: Text("Do you think Tamagotchi will go left or right?"), message: Text("Choose wisely..."), buttons: [.default(Text("Left"), action: {
-                            gameResponse = "L"
-                            playGame()
-                            //need to turn this off, otherwise it won't let you re-open the action sheet
-                        }),
-                            .default(Text("Right"), action: {
-                                gameResponse = "R"
+                Form {
+                    //Button for feed meal
+                    Button("Feed meal", action: {
+                        dialogue = tamagotchi.eatMeal()
+                    })
+                    Button("Feed snack", action: {
+                        dialogue = tamagotchi.eatSnack()
+                    })
+                    
+                    
+                    //makes the game work. Action Sheets are brilliant!
+                    
+                    Button("Play game", action: { showingAlert = true })
+                        .actionSheet(isPresented: $showingAlert, content: {
+                            ActionSheet(title: Text("Do you think Tamagotchi will go left or right?"), message: Text("Choose wisely..."), buttons: [.default(Text("Left"), action: {
+                                gameResponse = "L"
                                 playGame()
                                 //need to turn this off, otherwise it won't let you re-open the action sheet
-                        })])
-                    })
+                            }),
+                                .default(Text("Right"), action: {
+                                    gameResponse = "R"
+                                    playGame()
+                                    //need to turn this off, otherwise it won't let you re-open the action sheet
+                            })])
+                        })
+                    
+                }
                 
-            }
-            Text("\(dialogue)")
-                .baselineOffset(20.0)
+                Text("\(dialogue)")
+                    .baselineOffset(20.0)
+                
+            }.navigationBarTitle("Tamagotchi")
             
         }
-        
     }
+        
     
     func playGame() {
 
