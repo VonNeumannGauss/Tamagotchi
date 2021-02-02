@@ -19,7 +19,15 @@ class Tamagotchi: ObservableObject {
             }
         }
     }
-    @Published var discipline: Int
+    @Published var discipline: Int {
+        didSet {
+            if discipline > 5 {
+                discipline = 5
+            } else if discipline < 0 {
+                discipline = 0
+            }
+        }
+    }
     @Published var hunger: Int {
         didSet {
             if hunger > 5 {
@@ -59,7 +67,7 @@ class Tamagotchi: ObservableObject {
     }
     
     func displayHealthMeter() -> String {
-        return "Happiness: \(String(repeating: "\u{2665}", count:happiness)) \nHunger: \(String(repeating: "\u{1F374}", count:hunger)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:discipline)) \nAge: \(age)"
+        return "Happiness: \(String(repeating: "\u{2665}", count:happiness)) \nHunger: \(String(repeating: "\u{1F374}", count:hunger)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:discipline)) \nAge: \(age) \nHealth: \(!isSick ? "Healthy" : "Unhealthy") \nHygiene: \(!areThereDroppings ? "Clean" : "Needs cleaning")"
     }
     //tamagotchis live to around 23 years at best = 230 seconds
     //make it so that it ages more if things aren't being done i.e. ages faster or more likely to die of health stats are low
@@ -148,11 +156,6 @@ class Tamagotchi: ObservableObject {
         }
     }
     
-    func goToToilet() {
-        areThereDroppings = false
-        happiness += 2
-    }
-    
     func beDisciplined() {
         discipline += 1
         print("You disciplined Tamagotchi.")
@@ -161,6 +164,7 @@ class Tamagotchi: ObservableObject {
     func beCleanedUpAfter() {
         areThereDroppings = false
         print("Thanks for cleaning! I feel much better now.")
+        happiness += 1
     }
     
     func randomEvent() {
