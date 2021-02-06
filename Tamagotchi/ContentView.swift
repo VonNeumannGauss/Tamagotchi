@@ -89,6 +89,14 @@ struct ContentView: View {
                             })])
                         })
                     
+                    Button("Give medicine", action: {
+                        dialogue = tamagotchi.takeMedicine()
+                    })
+                    
+                    Button("Clean up", action: {
+                        dialogue = tamagotchi.beCleanedUpAfter()
+                    })
+                    
                 }
                 
                 Text("\(dialogue)")

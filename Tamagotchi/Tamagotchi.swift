@@ -70,8 +70,8 @@ class Tamagotchi: ObservableObject {
         return "Happiness: \(String(repeating: "\u{2665}", count:happiness)) \nHunger: \(String(repeating: "\u{1F374}", count:hunger)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:discipline)) \nAge: \(age) \nHealth: \(!isSick ? "Healthy" : "Unhealthy") \nHygiene: \(!areThereDroppings ? "Clean" : "Needs cleaning")"
     }
     //tamagotchis live to around 23 years at best = 230 seconds
-    //make it so that it ages more if things aren't being done i.e. ages faster or more likely to die of health stats are low
-    //display warning messages?
+    //make it so that it ages more if things aren't being done i.e. ages faster or more likely to die of health stats are low - this is in place
+    //display warning messages? - not necessary if the  health bar displays this
     func increaseAge() {
         age += 1
     }
@@ -147,12 +147,12 @@ class Tamagotchi: ObservableObject {
         return dialogue
     }
     
-    func takeMedicine() {
+    func takeMedicine() -> String {
         isSick = Bool.random()
         if isSick {
-            print("Tamagotchi is still sick! Keep giving medicine!")
+            return "Tamagotchi is still sick! Keep giving medicine!"
         } else {
-            print("Tamagotchi is feeling better now")
+            return "Tamagotchi is feeling better now"
         }
     }
     
@@ -161,10 +161,10 @@ class Tamagotchi: ObservableObject {
         print("You disciplined Tamagotchi.")
     }
     
-    func beCleanedUpAfter() {
+    func beCleanedUpAfter() -> String {
         areThereDroppings = false
-        print("Thanks for cleaning! I feel much better now.")
         happiness += 1
+        return "Thanks for cleaning! I feel much better now."
     }
     
     func randomEvent() {
