@@ -17,6 +17,7 @@ import SwiftUI
 
 //THings to do:
 //take all of the state modifying stuff out of the body and into functions beneath
+//Sir, I'm not sure if I should do this with what I have here - I only have one or two line state-modifying code under each UI section, so is it still worth removing?
 
 
 struct ContentView: View {
@@ -43,7 +44,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 VStack {
-                    //add the age here - this is also where the timer for random events will be linked in
+                   
                     Text(tamagotchi.displayHealthMeter())
                         .padding()
                         .onReceive(timer) { _ in

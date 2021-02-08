@@ -172,7 +172,7 @@ class Tamagotchi: ObservableObject {
         
         if (age >= 10) || (hunger >= 2) || (happiness <= 2) || (areThereDroppings) || (isSick) {
             death = Int.random(in: 1...3)
-            //what happens will be delegated to contentView
+            //what happens has been delegated to contentView
         }
         
         switch whatHappens {
