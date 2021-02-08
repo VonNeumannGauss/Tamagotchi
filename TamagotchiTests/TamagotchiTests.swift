@@ -13,7 +13,7 @@ class TamagotchiTests: XCTestCase {
         //arrange
         //act
         let tamagotchi = Tamagotchi()
-        XCTAssertEqual("Happiness: \(String(repeating: "\u{2665}", count:0)) \nHunger: \(String(repeating: "\u{1F374}", count:5)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:0))",tamagotchi.displayHealthMeter())
+    
+        XCTAssertEqual("Happiness: \(String(repeating: "\u{2665}", count:0)) \nHunger: \(String(repeating: "\u{1F374}", count:5)) \nDiscipline: \(String(repeating: "\u{1F4AA}", count:0)) \nAge: \(0) \nHealth: \("Healthy") \nHygiene: \("Clean")",tamagotchi.displayHealthMeter())
     }
-
 }
