@@ -52,7 +52,7 @@ struct ContentView: View {
                             
                             if tamagotchi.isDead() {
                                 isDead = true
-                                Text("")
+                                Text("Death")
                                     .alert(isPresented: $isDead) {
                                         Alert(title: Text("Game over"), message: Text("Tamagotchi died"), dismissButton: .default(Text("Ok")))
                                     }
@@ -80,12 +80,11 @@ struct ContentView: View {
                             ActionSheet(title: Text("Do you think Tamagotchi will go left or right?"), message: Text("Choose wisely..."), buttons: [.default(Text("Left"), action: {
                                 gameResponse = "L"
                                 playGame()
-                                //need to turn this off, otherwise it won't let you re-open the action sheet
                             }),
                                 .default(Text("Right"), action: {
                                     gameResponse = "R"
                                     playGame()
-                                    //need to turn this off, otherwise it won't let you re-open the action sheet
+                                    
                             })])
                         })
                     
