@@ -170,6 +170,11 @@ class Tamagotchi: ObservableObject {
     func randomEvent() {
         let whatHappens = Int.random(in: 1...6)
         
+        if (age >= 10) || (hunger >= 2) || (happiness <= 2) || (areThereDroppings) || (isSick) {
+            death = Int.random(in: 1...3)
+            //what happens will be delegated to contentView
+        }
+        
         switch whatHappens {
         case 1:
             //gets sick
@@ -184,11 +189,6 @@ class Tamagotchi: ObservableObject {
         default:
             happiness -= 1
             
-        }
-        
-        if (age >= 10) || (hunger >= 2) || (happiness <= 2) || (areThereDroppings) || (isSick) {
-            death = Int.random(in: 1...3)
-            //what happens will be delegated to contentView
         }
         
     }
